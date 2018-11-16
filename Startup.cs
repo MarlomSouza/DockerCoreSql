@@ -42,6 +42,11 @@ namespace docker_app_compose
             {
                 app.UseDeveloperExceptionPage();
             }
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                context.Database.Migrate();
+            }
 
             app.UseMvc();
         }
