@@ -6,7 +6,7 @@ ENV MSSQL_PID=Express
 
 WORKDIR /src
 
-COPY ["./DataBase/comandos.sql", "./"]
-COPY ["./DataBase/setup-database.sh", "./"]
+COPY ["./comandos.sql", "./"]
+COPY ["./setup-database.sh", "./"]
 
 CMD ./setup-database.sh & /opt/mssql/bin/sqlservr

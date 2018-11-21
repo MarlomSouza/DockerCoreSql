@@ -16,7 +16,7 @@ namespace docker_app_compose.Data.Repository
 
         public IEnumerable<TEntity> Get() => context.Set<TEntity>().AsEnumerable();
 
-        public void Save(TEntity entity)
+        public virtual void Save(TEntity entity)
         {
             context.Add<TEntity>(entity);
             context.SaveChanges();

@@ -2,16 +2,24 @@ version: "3"
 services:
   web:
     build:
-       context: .
-       dockerfile: app.Dockerfile
+      context: .
+      dockerfile: app.Dockerfile
+      args:
+        - Ambiente=Development
     ports:
       - "8000:80"
     depends_on:
       - db
   db:
     build:
-      context: .
+      context: ./DataBase
       dockerfile: db.Dockerfile
     ports:
      - "1400:1433"
-    
+  fila:
+    image: johnnypark/kafka-zookeeper
+    ports:
+      - "2181:2181"
+      - "9092:9092"
+    environment:
+     - ADVERTISED_HOST=127.0.0.1
