@@ -1,8 +1,10 @@
+using docker_app_compose.Dominio;
+
 namespace DockerCoreSql.Dominio
 {
-    public interface IFila
+    public interface IFila<TEntity> where TEntity: Entity
     {
-        void Enviar(string valor);
-        string Consumir();
+        void Enviar(TEntity entity);
+        void Consumir();
     }
 }

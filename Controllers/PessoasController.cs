@@ -12,14 +12,15 @@ namespace docker_app_compose.Controllers
     [Route("api/[controller]")]
     public class PessoasController : Controller
     {
-        private readonly IRepository<Pessoa> _repository;
+        private readonly PessoaRepository _repository;
 
-        public PessoasController(IRepository<Pessoa> repository) => _repository = repository;
+        public PessoasController(PessoaRepository repository) => _repository = repository;
 
         // GET api/values
         [HttpGet]
         public IEnumerable<Pessoa> Get()
         {
+            _repository.LerDaFila();
             return _repository.Get();
         }
 

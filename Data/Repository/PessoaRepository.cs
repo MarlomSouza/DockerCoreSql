@@ -9,19 +9,23 @@ namespace docker_app_compose.Data.Repository
 {
     public class PessoaRepository : Repository<Pessoa>
     {
-        private readonly IFila fila;
+        private readonly IFila<Pessoa> fila;
 
-        public PessoaRepository(ApplicationDbContext appDBContext, IFila fila) : base(appDBContext)
+        public PessoaRepository(ApplicationDbContext appDBContext, IFila<Pessoa> fila) : base(appDBContext)
         {
             this.fila = fila;
         }
+
+         public void LerDaFila(){
+             fila.Consumir();
+         }
         public Pessoa ObterPorCpf(string cpf) => context.Pessoas.SingleOrDefault(pessoa => pessoa.Cpf == cpf);
         public IEnumerable<Pessoa> ObterPorNome(string nome) => context.Pessoas.Where(pessoa => pessoa.Nome.Contains(nome));
 
         public override void Save(Pessoa entity)
         {
             base.Save(entity);
-            fila.Enviar(entity.Nome);
+            fila.Enviar(entity);
         }
     }
 }
